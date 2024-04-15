@@ -3,14 +3,18 @@ import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './login.module.css';
 
 const LoginPage: FC = () => {
-  const hi = 'hi';
+  const fetchLogin = async () => {
+    // TODO: fetch login
+  };
   return (
     <main className={styles.layout}>
-      <TextInput radius="xl" placeholder="Username" />
-      <PasswordInput radius="xl" placeholder="Password" />
-      <Button variant="light" radius="xl">
-        login
-      </Button>
+      <form onSubmit={fetchLogin}>
+        <TextInput radius="xl" placeholder="Username" />
+        <PasswordInput radius="xl" placeholder="Password" />
+        <Button variant="light" radius="xl">
+          login
+        </Button>
+      </form>
     </main>
   );
 };
