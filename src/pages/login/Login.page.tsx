@@ -1,18 +1,25 @@
 import { FC, useState, FormEvent } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './login.module.css';
 import { loginUser } from '@/utils/api';
+import { useAppDispatch } from '@/utils/hooks';
+import { loginPending, loginSuccess } from '@/services/slices/user-slice';
 
 const LoginPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const fetchLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch(loginPending());
     try {
       const res = await loginUser(loginValue, passwordValue);
+      dispatch(loginSuccess(res));
+      navigate('/', { replace: true });
     } catch (error) {
       setErrorMessage('Неверный логин или пароль');
     }

@@ -16,6 +16,7 @@ const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.status = 'succeeded';
       state.user = action.payload;
+      console.log(action.payload, state.user);
       state.error = null;
     },
     loginFailed: (state, action) => {

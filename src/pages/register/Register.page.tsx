@@ -29,18 +29,18 @@ const RegisterPage: FC = () => {
         <TextInput
           radius="xl"
           size="lg"
-          placeholder="Логин"
-          value={loginValue}
-          onChange={(e) => setLoginValue(e.currentTarget.value)}
+          placeholder="ФИО"
+          value={usernameValue}
+          onChange={(e) => setUsernameValue(e.currentTarget.value)}
           className={styles.input}
         />
 
         <TextInput
           radius="xl"
           size="lg"
-          placeholder="ФИО"
-          value={usernameValue}
-          onChange={(e) => setUsernameValue(e.currentTarget.value)}
+          placeholder="Логин"
+          value={loginValue}
+          onChange={(e) => setLoginValue(e.currentTarget.value)}
           className={styles.input}
         />
 

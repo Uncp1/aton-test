@@ -43,9 +43,14 @@ export const loginUser = (login: string, password: string) =>
       if (data.access_token) {
         sessionStorage.setItem('auth_token', data.access_token);
         return data;
+        console.log(data, 'api');
       }
       throw new Error('No access token received');
     });
+
+export const logoutUser = () => {
+  sessionStorage.removeItem('auth_token');
+};
 
 export const getClients = () =>
   fetch(`${URL}/clients/`, {

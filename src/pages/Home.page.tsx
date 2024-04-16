@@ -3,6 +3,7 @@ import { Button } from '@mantine/core';
 import ClientItem from '@/components/client-item/client-item';
 import styles from './styles.module.css';
 import { getClients } from '@/utils/api';
+import { useAppSelector } from '@/utils/hooks';
 
 interface ClientItemType {
   lastName: string;
@@ -14,6 +15,8 @@ interface ClientItemType {
 }
 
 export const HomePage: FC = () => {
+  const { user } = useAppSelector((store) => store.user);
+  console.log(user);
   const [clientsData, setClientsData] = useState<ClientItemType[]>([]);
   useEffect(() => {
     const fetchClients = async () => {
