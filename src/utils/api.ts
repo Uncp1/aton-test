@@ -6,6 +6,12 @@ interface ResponseObject {
   json: () => Promise<any>;
 }
 
+export interface UserData {
+  username: string;
+  login: string;
+  password: string;
+}
+
 const checkResponse = (res: ResponseObject) => {
   if (res.ok || res.created) {
     return res.json();
@@ -19,11 +25,18 @@ const headersWithAuthorizeFn = () => ({
   authorization: `Bearer ${sessionStorage.getItem('auth_token')}`,
 });
 
-export const loginUser = (username: string, password: string) =>
+export const registerUser = (userData: UserData) =>
+  fetch(`${URL}/signup/`, {
+    method: 'POST',
+    headers: headersWithContentType,
+    body: JSON.stringify(userData),
+  }).then(checkResponse);
+
+export const loginUser = (login: string, password: string) =>
   fetch(`${URL}/signin/`, {
     method: 'POST',
     headers: headersWithContentType,
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ login, password }),
   })
     .then(checkResponse)
     .then((data: any) => {
@@ -31,7 +44,6 @@ export const loginUser = (username: string, password: string) =>
         sessionStorage.setItem('auth_token', data.access_token);
         return data;
       }
-      // Directly return a value or throw an error without an else block
       throw new Error('No access token received');
     });
 

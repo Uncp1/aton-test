@@ -34,7 +34,11 @@ const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status, inn, ac
 
       <p>Инн: {inn}</p>
       <p>Номер счета: {accountNumber}</p>
-      <Select value={status} data={['Не в работе', 'В работе']} onChange={changeClientStatus} />
+      <Select
+        value={status}
+        data={['Не в работе', 'В работе', 'Завершен']}
+        onChange={changeClientStatus}
+      />
     </Paper>
   );
 };

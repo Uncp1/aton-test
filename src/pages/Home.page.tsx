@@ -3,7 +3,6 @@ import { Button } from '@mantine/core';
 import ClientItem from '@/components/client-item/client-item';
 import styles from './styles.module.css';
 import { getClients } from '@/utils/api';
-import { s } from 'vitest/dist/reporters-LqC_WI4d';
 
 interface ClientItemType {
   lastName: string;

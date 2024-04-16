@@ -1,15 +1,23 @@
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './register.module.css';
-import { loginUser } from '@/utils/api';
+import { UserData, registerUser } from '@/utils/api';
 
 const RegisterPage: FC = () => {
+  const [loginValue, setLoginValue] = useState('');
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
-  const fetchRegister = async () => {
-    const res = await loginUser(usernameValue, passwordValue);
+  const fetchRegister = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const userData: UserData = {
+      username: usernameValue,
+      login: loginValue,
+      password: passwordValue,
+    };
+    const res = await registerUser(userData);
+
     return res;
   };
 
@@ -21,20 +29,30 @@ const RegisterPage: FC = () => {
         <TextInput
           radius="xl"
           size="lg"
-          placeholder="Username"
+          placeholder="Логин"
+          value={loginValue}
+          onChange={(e) => setLoginValue(e.currentTarget.value)}
+          className={styles.input}
+        />
+
+        <TextInput
+          radius="xl"
+          size="lg"
+          placeholder="ФИО"
           value={usernameValue}
           onChange={(e) => setUsernameValue(e.currentTarget.value)}
           className={styles.input}
         />
+
         <PasswordInput
           radius="xl"
           size="lg"
-          placeholder="Password"
+          placeholder="Пароль"
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.currentTarget.value)}
           className={styles.input}
         />
-        <Button variant="light" radius="xl">
+        <Button type="submit" variant="light" radius="xl">
           Зарегестрироваться
         </Button>
       </form>
