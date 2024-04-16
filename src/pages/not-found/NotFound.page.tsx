@@ -3,18 +3,15 @@ import { Button } from '@mantine/core';
 import styles from './notfound.module.css';
 
 const NotFoundPage = () => (
-  <main>
-    <section className={styles.section}>
-      <div className={styles.container}>
-        <h1 className="text text_type_digits-large"> 404 </h1>
-        <p className="text text_type_main-large">Lost in space</p>
-      </div>
-      <Link to="/">
-        <Button variant="light" radius="xl">
-          Take me home
-        </Button>
-      </Link>
-    </section>
+  <main className={styles.layout}>
+    <h2 className={styles.text}> 404 </h2>
+    <p className={styles.text}>Вы потерялись</p>
+
+    <Link to="/">
+      <Button variant="light" radius="xl">
+        Take me home
+      </Button>
+    </Link>
   </main>
 );
 

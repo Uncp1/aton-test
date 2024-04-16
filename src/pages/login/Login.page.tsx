@@ -15,25 +15,31 @@ const LoginPage: FC = () => {
 
   return (
     <main className={styles.layout}>
-      <form onSubmit={fetchLogin}>
+      <form className={styles.form} onSubmit={fetchLogin}>
+        <h2 className={styles.title}>Вход</h2>
+
         <TextInput
           radius="xl"
+          size="lg"
           placeholder="Username"
           value={usernameValue}
           onChange={(e) => setUsernameValue(e.currentTarget.value)}
+          className={styles.input}
         />
         <PasswordInput
           radius="xl"
+          size="lg"
           placeholder="Password"
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.currentTarget.value)}
+          className={styles.input}
         />
-        <Button variant="light" radius="xl">
+        <Button className={styles.button} variant="light" radius="xl">
           Войти
         </Button>
       </form>
 
-      <div className={styles.register}>
+      <div>
         <p className={styles.item}>
           Вы — новый пользователь?
           <NavLink to="/register" className={styles.link}>

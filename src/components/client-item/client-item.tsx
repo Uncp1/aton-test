@@ -20,7 +20,7 @@ const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status, inn, ac
   };
 
   const clientBackgroundColor = colorScheme === 'dark' ? '#1c1c21' : theme.colors.gray[0];
-  console.log(status);
+
   return (
     <Paper
       style={{ backgroundColor: clientBackgroundColor }}

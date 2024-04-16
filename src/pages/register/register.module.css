@@ -1,0 +1,48 @@
+.layout {
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 480px;
+  margin-bottom: 40px;
+}
+
+.title {
+  margin: 0;
+}
+
+.input {
+  width: 100%;
+}
+.item {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.link {
+  color: rgb(24, 100, 171);
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .input {
+    width: 360px;
+  }
+}
+
+@media (max-width: 400px) {
+  .input {
+    width: 240px;
+  }
+}

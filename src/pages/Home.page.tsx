@@ -1,7 +1,9 @@
 import { FC, useEffect, useState } from 'react';
+import { Button } from '@mantine/core';
 import ClientItem from '@/components/client-item/client-item';
 import styles from './styles.module.css';
 import { getClients } from '@/utils/api';
+import { s } from 'vitest/dist/reporters-LqC_WI4d';
 
 interface ClientItemType {
   lastName: string;
@@ -23,10 +25,19 @@ export const HomePage: FC = () => {
     fetchClients();
   }, []);
 
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const generateClients = () => {
+    setButtonDisabled(true);
+    // TODO: generate clients
+  };
   return (
-    <main className={styles.clients}>
-      <h2>Ваши клиенты</h2>
-      <div>
+    <main className={styles.layout}>
+      <h2 className={styles.title}>Ваши клиенты</h2>
+
+      <Button disabled={isButtonDisabled} onClick={generateClients} variant="light" radius="xl">
+        Сгенерировать клиентов
+      </Button>
+      <section className={styles.clientsList}>
         {clientsData.map((item, index) => (
           <ClientItem
             key={index}
@@ -38,7 +49,7 @@ export const HomePage: FC = () => {
             accountNumber={item.accountNumber}
           />
         ))}
-      </div>
+      </section>
     </main>
   );
 };

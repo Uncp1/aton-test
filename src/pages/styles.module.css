@@ -1,0 +1,14 @@
+.layout {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clientsList {
+  display: grid;
+}
+
+.title {
+  margin: 0;
+}
