@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Select } from '@mantine/core';
+import { Paper, Select, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import styles from './client-item.module.css';
 
 interface IClient {
@@ -7,21 +7,35 @@ interface IClient {
   firstName: string;
   surname: string;
   status: string;
+  inn: string;
+  accountNumber: string;
 }
 
-const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status }) => {
+const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status, inn, accountNumber }) => {
+  const { colorScheme } = useMantineColorScheme();
+  const theme = useMantineTheme();
+
   const changeClientStatus = () => {
     // TODO: change client status
   };
 
+  const clientBackgroundColor = colorScheme === 'dark' ? '#1c1c21' : theme.colors.gray[0];
+  console.log(status);
   return (
-    <div className={styles.client}>
+    <Paper
+      style={{ backgroundColor: clientBackgroundColor }}
+      shadow="xs"
+      radius="lg"
+      className={styles.client}
+    >
       <p>
         {lastName} {firstName} {surname}
       </p>
 
-      <Select value={status} data={['active', 'finished']} onChange={changeClientStatus} />
-    </div>
+      <p>Инн: {inn}</p>
+      <p>Номер счета: {accountNumber}</p>
+      <Select value={status} data={['Не в работе', 'В работе']} onChange={changeClientStatus} />
+    </Paper>
   );
 };
 

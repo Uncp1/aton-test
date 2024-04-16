@@ -1,21 +1,28 @@
+import { FC, useEffect, useState } from 'react';
 import ClientItem from '@/components/client-item/client-item';
 import styles from './styles.module.css';
+import { getClients } from '@/utils/api';
 
-export function HomePage() {
-  const clientsData = [
-    {
-      lastName: 'Иванов',
-      firstName: 'Иван',
-      surname: 'Иванович',
-      status: 'active',
-    },
-    {
-      lastName: 'Петров',
-      firstName: 'Иван',
-      surname: 'Иванович',
-      status: 'active',
-    },
-  ];
+interface ClientItemType {
+  lastName: string;
+  firstName: string;
+  surname: string;
+  status: string;
+  inn: string;
+  accountNumber: string;
+}
+
+export const HomePage: FC = () => {
+  const [clientsData, setClientsData] = useState<ClientItemType[]>([]);
+  useEffect(() => {
+    const fetchClients = async () => {
+      const data = await getClients();
+      setClientsData(data);
+    };
+
+    fetchClients();
+  }, []);
+
   return (
     <main className={styles.clients}>
       <h2>Ваши клиенты</h2>
@@ -27,9 +34,11 @@ export function HomePage() {
             firstName={item.firstName}
             surname={item.surname}
             status={item.status}
+            inn={item.inn}
+            accountNumber={item.accountNumber}
           />
         ))}
       </div>
     </main>
   );
-}
+};
