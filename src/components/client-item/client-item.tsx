@@ -17,7 +17,6 @@ const ClientItem: FC<ClientItemData> = ({
   const theme = useMantineTheme();
 
   const [isLoading, setIsLoading] = useState(false);
-  //const [error, setError] = useState(null | string);
 
   const changeClientStatus = async (newStatus: string) => {
     setIsLoading(true);
@@ -28,7 +27,13 @@ const ClientItem: FC<ClientItemData> = ({
   };
 
   const clientBackgroundColor = colorScheme === 'dark' ? '#1c1c21' : theme.colors.gray[0];
+
   const [value, setValue] = useState<string>(status);
+  const handleValueChange = (newValue: string | null) => {
+    if (newValue !== null) {
+      setValue(newValue);
+    }
+  };
   return (
     <Paper
       style={{ backgroundColor: clientBackgroundColor }}
@@ -45,7 +50,7 @@ const ClientItem: FC<ClientItemData> = ({
       <Select
         value={value}
         data={['Не в работе', 'В работе', 'Завершен']}
-        onChange={setValue}
+        onChange={handleValueChange}
         onOptionSubmit={(newStatus: string) => changeClientStatus(newStatus)}
         disabled={isLoading}
       />

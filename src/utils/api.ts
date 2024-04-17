@@ -60,7 +60,6 @@ export const postClient = (clientData: ClientData) =>
   }).then(checkResponse);
 
 export const patchClient = (id: string, status: string) => {
-  console.log(id, status);
   fetch(`${URL}/clients/${id}`, {
     method: 'PATCH',
     headers: headersWithAuthorizeFn(),

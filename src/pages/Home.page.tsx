@@ -35,8 +35,10 @@ export const HomePage: FC = () => {
 
   const generateClient = () => {
     const client = generateClientsData(username);
+
+    const newClient = { ...client, _id: `temp-${Date.now().toString()}` };
     postClient(client);
-    setClientsData([...clientsData, client]);
+    setClientsData([...clientsData, newClient]);
   };
 
   const renderClientsList = () => {

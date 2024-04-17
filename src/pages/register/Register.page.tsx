@@ -13,15 +13,57 @@ const RegisterPage: FC = () => {
   const [loginValue, setLoginValue] = useState('');
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const isButtonDisabled = !usernameValue || !loginValue || !passwordValue;
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
+  const validatePassword = (password: string) => {
+    const minLength = 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password);
+    const noRussian = /[А-Яа-яЁё]/.test(password);
+
+    if (noRussian) {
+      setPasswordErrorMessage('Пароль не должен содержать кириллицу');
+      return false;
+    }
+    if (password.length < minLength) {
+      setPasswordErrorMessage('Пароль должен содержать не менее 8 символов');
+      return false;
+    }
+    if (!hasUppercase) {
+      setPasswordErrorMessage('Пароль должен содержать хотя бы одну заглавную букву');
+      return false;
+    }
+    if (!hasLowercase) {
+      setPasswordErrorMessage('Пароль должен содержать хотя бы одну строчную букву');
+      return false;
+    }
+    if (!hasNumber) {
+      setPasswordErrorMessage('Пароль должен содержать хотя бы одну цифру');
+      return false;
+    }
+    if (!hasSpecialChar) {
+      setPasswordErrorMessage('Пароль должен содержать хотя бы один специальный символ');
+      return false;
+    }
+    setPasswordErrorMessage('');
+    return true;
+  };
   const fetchRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorMessage('');
     dispatch(loginPending());
     const userData: UserData = {
       username: usernameValue,
       login: loginValue,
       password: passwordValue,
     };
+    if (!validatePassword(passwordValue)) {
+      return;
+    }
     try {
       await registerUser(userData);
       const loginRes = await loginUser(loginValue, passwordValue);
@@ -29,7 +71,7 @@ const RegisterPage: FC = () => {
       navigate('/', { replace: true });
     } catch (error) {
       dispatch(loginFailed(error));
-      //setErrorMessage('Неверный логин или пароль');
+      setErrorMessage('Пользователь с таким логином уже существует');
     }
   };
 
@@ -54,6 +96,7 @@ const RegisterPage: FC = () => {
           value={loginValue}
           onChange={(e) => setLoginValue(e.currentTarget.value)}
           className={styles.input}
+          error={errorMessage}
         />
 
         <PasswordInput
@@ -63,8 +106,9 @@ const RegisterPage: FC = () => {
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.currentTarget.value)}
           className={styles.input}
+          error={passwordErrorMessage}
         />
-        <Button type="submit" variant="light" radius="xl">
+        <Button disabled={isButtonDisabled} type="submit" variant="light" radius="xl">
           Зарегестрироваться
         </Button>
       </form>

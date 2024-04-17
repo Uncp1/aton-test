@@ -15,6 +15,7 @@ const LoginPage: FC = () => {
 
   const fetchLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrorMessage('');
     dispatch(loginPending());
     try {
       const res = await loginUser(loginValue, passwordValue);
@@ -46,6 +47,7 @@ const LoginPage: FC = () => {
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.currentTarget.value)}
           className={styles.input}
+          error={errorMessage}
         />
         <Button type="submit" className={styles.button} variant="light" radius="xl">
           Войти
@@ -59,8 +61,6 @@ const LoginPage: FC = () => {
             Зарегистрироваться
           </NavLink>
         </p>
-
-        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
       </div>
     </main>
   );
