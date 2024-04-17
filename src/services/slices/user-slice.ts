@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
-  username: string | null;
+  username: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   token: string | null;
 }
 
 const initialState: UserState = {
-  username: null,
+  username: '',
   status: 'idle',
   error: null,
   token: null,
@@ -32,7 +32,7 @@ const userSlice = createSlice({
       state.error = action.payload;
     },
     logout: (state) => {
-      state.username = null;
+      state.username = '';
       state.token = null;
       state.status = 'idle';
       state.error = null;

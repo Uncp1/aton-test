@@ -1,3 +1,5 @@
+import { ClientData, UserData } from './types';
+
 const URL = 'http://localhost:3000';
 
 interface ResponseObject {
@@ -5,13 +7,6 @@ interface ResponseObject {
   created?: boolean;
   json: () => Promise<any>;
 }
-
-export interface UserData {
-  username: string;
-  login: string;
-  password: string;
-}
-
 const checkResponse = (res: ResponseObject) => {
   if (res.ok || res.created) {
     return res.json();
@@ -40,7 +35,6 @@ export const loginUser = (login: string, password: string) =>
   })
     .then(checkResponse)
     .then((data: any) => {
-      console.log(data);
       if (data.access_token) {
         sessionStorage.setItem('auth_token', data.access_token);
         return data;
@@ -52,8 +46,24 @@ export const logoutUser = () => {
   sessionStorage.removeItem('auth_token');
 };
 
-export const getClients = () =>
-  fetch(`${URL}/clients/`, {
+export const getClients = (responsibleUser: string) =>
+  fetch(`${URL}/clients/${responsibleUser}`, {
     method: 'GET',
     headers: headersWithAuthorizeFn(),
   }).then(checkResponse);
+
+export const postClient = (clientData: ClientData) =>
+  fetch(`${URL}/clients/`, {
+    method: 'POST',
+    headers: headersWithAuthorizeFn(),
+    body: JSON.stringify(clientData),
+  }).then(checkResponse);
+
+export const patchClient = (id: string, status: string) => {
+  console.log(id, status);
+  fetch(`${URL}/clients/${id}`, {
+    method: 'PATCH',
+    headers: headersWithAuthorizeFn(),
+    body: JSON.stringify({ status }),
+  }).then(checkResponse);
+};

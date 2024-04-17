@@ -1,24 +1,36 @@
 import { FC, FormEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './register.module.css';
-import { UserData, registerUser } from '@/utils/api';
+import { loginUser, registerUser } from '@/utils/api';
+import { useAppDispatch } from '@/utils/hooks/useApp';
+import { loginFailed, loginPending, loginSuccess } from '@/services/slices/user-slice';
+import { UserData } from '@/utils/types';
 
 const RegisterPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [loginValue, setLoginValue] = useState('');
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   const fetchRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch(loginPending());
     const userData: UserData = {
       username: usernameValue,
       login: loginValue,
       password: passwordValue,
     };
-    const res = await registerUser(userData);
-
-    return res;
+    try {
+      await registerUser(userData);
+      const loginRes = await loginUser(loginValue, passwordValue);
+      dispatch(loginSuccess(loginRes));
+      navigate('/', { replace: true });
+    } catch (error) {
+      dispatch(loginFailed(error));
+      //setErrorMessage('Неверный логин или пароль');
+    }
   };
 
   return (

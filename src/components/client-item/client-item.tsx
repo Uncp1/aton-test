@@ -1,26 +1,34 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Paper, Select, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import styles from './client-item.module.css';
+import { ClientItemData } from '@/utils/types';
+import { patchClient } from '@/utils/api';
 
-interface IClient {
-  lastName: string;
-  firstName: string;
-  surname: string;
-  status: string;
-  inn: string;
-  accountNumber: string;
-}
-
-const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status, inn, accountNumber }) => {
+const ClientItem: FC<ClientItemData> = ({
+  lastName,
+  firstName,
+  surname,
+  status,
+  inn,
+  accountNumber,
+  _id,
+}) => {
   const { colorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
 
-  const changeClientStatus = () => {
-    // TODO: change client status
+  const [isLoading, setIsLoading] = useState(false);
+  //const [error, setError] = useState(null | string);
+
+  const changeClientStatus = async (newStatus: string) => {
+    setIsLoading(true);
+
+    await patchClient(_id, newStatus);
+
+    setIsLoading(false);
   };
 
   const clientBackgroundColor = colorScheme === 'dark' ? '#1c1c21' : theme.colors.gray[0];
-
+  const [value, setValue] = useState<string>(status);
   return (
     <Paper
       style={{ backgroundColor: clientBackgroundColor }}
@@ -28,16 +36,18 @@ const ClientItem: FC<IClient> = ({ lastName, firstName, surname, status, inn, ac
       radius="lg"
       className={styles.client}
     >
-      <p>
+      <h4 className={styles.text}>
         {lastName} {firstName} {surname}
-      </p>
+      </h4>
+      <p className={styles.text}>Инн: {inn}</p>
+      <p className={styles.text}>Номер счета: {accountNumber}</p>
 
-      <p>Инн: {inn}</p>
-      <p>Номер счета: {accountNumber}</p>
       <Select
-        value={status}
+        value={value}
         data={['Не в работе', 'В работе', 'Завершен']}
-        onChange={changeClientStatus}
+        onChange={setValue}
+        onOptionSubmit={(newStatus: string) => changeClientStatus(newStatus)}
+        disabled={isLoading}
       />
     </Paper>
   );

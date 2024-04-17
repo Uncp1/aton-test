@@ -1,12 +1,19 @@
 .layout {
   margin-top: 60px;
   display: flex;
+  gap: 16px;
   flex-direction: column;
   align-items: center;
 }
 
 .clientsList {
-  display: grid;
+  margin: auto;
+  padding: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1280px;
+  gap: 48px;
+  justify-content: center;
 }
 
 .title {

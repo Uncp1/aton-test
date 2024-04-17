@@ -1,15 +1,16 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ActionIcon, Modal, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { ActionIcon, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { IconLogout, IconSun } from '@tabler/icons-react';
 import styles from './header.module.css';
 import { logoutUser } from '@/utils/api';
 import { useAppDispatch } from '@/utils/hooks/useApp';
 import { logout } from '@/services/slices/user-slice';
+import { useAuth } from '@/utils/hooks/useAuth';
 
 const Header: FC = () => {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
-  const [logoutModal, setLogoutModal] = useState(false);
+  const isAuthenticated = useAuth();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -33,11 +34,15 @@ const Header: FC = () => {
         <h1 className={styles.header__title}>MockCompany</h1>
 
         <div className={styles.header__actions}>
+          {isAuthenticated && (
+            <>
+              <ActionIcon onClick={handleLogout}>
+                <IconLogout />
+              </ActionIcon>
+            </>
+          )}
           <ActionIcon onClick={toggleTheme}>
             <IconSun />
-          </ActionIcon>
-          <ActionIcon onClick={handleLogout}>
-            <IconLogout />
           </ActionIcon>
         </div>
       </div>

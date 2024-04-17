@@ -4,7 +4,7 @@ import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './login.module.css';
 import { loginUser } from '@/utils/api';
 import { useAppDispatch } from '@/utils/hooks/useApp';
-import { loginPending, loginSuccess } from '@/services/slices/user-slice';
+import { loginFailed, loginPending, loginSuccess } from '@/services/slices/user-slice';
 
 const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +21,7 @@ const LoginPage: FC = () => {
       dispatch(loginSuccess(res));
       navigate('/', { replace: true });
     } catch (error) {
+      dispatch(loginFailed(error));
       setErrorMessage('Неверный логин или пароль');
     }
   };
