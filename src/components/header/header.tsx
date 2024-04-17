@@ -41,9 +41,6 @@ const Header: FC = () => {
           </ActionIcon>
         </div>
       </div>
-      <Modal opened={logoutModal} onClose={handleLogout} title="Authentication">
-        {/* Modal content */}
-      </Modal>
     </header>
   );
 };

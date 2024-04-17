@@ -13,18 +13,26 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute anonymous={false}>
             <HomePage />
           </ProtectedRoute>
         ),
       },
       {
         path: '/login',
-        element: <LoginPage />,
+        element: (
+          <ProtectedRoute anonymous={true}>
+            <LoginPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/register',
-        element: <RegisterPage />,
+        element: (
+          <ProtectedRoute anonymous={true}>
+            <RegisterPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '*',
