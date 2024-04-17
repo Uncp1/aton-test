@@ -1,9 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  user: null,
+interface UserState {
+  username: string | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+  token: string | null;
+}
+
+const initialState: UserState = {
+  username: null,
   status: 'idle',
   error: null,
+  token: null,
 };
 
 const userSlice = createSlice({
@@ -15,8 +23,8 @@ const userSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.status = 'succeeded';
-      state.user = action.payload;
-      console.log(action.payload, state.user);
+      state.token = action.payload.access_token;
+      state.username = action.payload.user.username;
       state.error = null;
     },
     loginFailed: (state, action) => {
@@ -24,7 +32,8 @@ const userSlice = createSlice({
       state.error = action.payload;
     },
     logout: (state) => {
-      state.user = null;
+      state.username = null;
+      state.token = null;
       state.status = 'idle';
       state.error = null;
     },

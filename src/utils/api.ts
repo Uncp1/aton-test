@@ -40,10 +40,10 @@ export const loginUser = (login: string, password: string) =>
   })
     .then(checkResponse)
     .then((data: any) => {
+      console.log(data);
       if (data.access_token) {
         sessionStorage.setItem('auth_token', data.access_token);
         return data;
-        console.log(data, 'api');
       }
       throw new Error('No access token received');
     });

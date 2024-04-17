@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from './login.module.css';
 import { loginUser } from '@/utils/api';
-import { useAppDispatch } from '@/utils/hooks';
+import { useAppDispatch } from '@/utils/hooks/useApp';
 import { loginPending, loginSuccess } from '@/services/slices/user-slice';
 
 const LoginPage: FC = () => {

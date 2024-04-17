@@ -1,11 +1,17 @@
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ActionIcon, Modal, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { IconLogout, IconSun } from '@tabler/icons-react';
 import styles from './header.module.css';
+import { logoutUser } from '@/utils/api';
+import { useAppDispatch } from '@/utils/hooks/useApp';
+import { logout } from '@/services/slices/user-slice';
 
 const Header: FC = () => {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const [logoutModal, setLogoutModal] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const theme = useMantineTheme();
 
   const toggleTheme = () => {
@@ -15,8 +21,10 @@ const Header: FC = () => {
   const headerBackgroundColor =
     colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[1];
 
-  const logOut = () => {
-    // TODO: log out
+  const handleLogout = () => {
+    dispatch(logout());
+    logoutUser();
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -28,12 +36,12 @@ const Header: FC = () => {
           <ActionIcon onClick={toggleTheme}>
             <IconSun />
           </ActionIcon>
-          <ActionIcon onClick={logOut}>
+          <ActionIcon onClick={handleLogout}>
             <IconLogout />
           </ActionIcon>
         </div>
       </div>
-      <Modal opened={logoutModal} onClose={logOut} title="Authentication">
+      <Modal opened={logoutModal} onClose={handleLogout} title="Authentication">
         {/* Modal content */}
       </Modal>
     </header>
