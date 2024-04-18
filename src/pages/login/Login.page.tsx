@@ -1,6 +1,6 @@
 import { FC, useState, FormEvent } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { Button, PasswordInput, TextInput, useMantineColorScheme } from '@mantine/core';
 import styles from './login.module.css';
 import { loginUser } from '@/utils/api';
 import { useAppDispatch } from '@/utils/hooks/useApp';
@@ -9,6 +9,7 @@ import { loginFailed, loginPending, loginSuccess } from '@/services/slices/user-
 const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { colorScheme } = useMantineColorScheme();
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,6 +28,7 @@ const LoginPage: FC = () => {
     }
   };
 
+  const linkColor = colorScheme === 'dark' ? '#66d9e8' : '#1864ab';
   return (
     <main className={styles.layout}>
       <form className={styles.form} onSubmit={fetchLogin}>
@@ -57,7 +59,7 @@ const LoginPage: FC = () => {
       <div>
         <p className={styles.item}>
           Вы — новый пользователь?
-          <NavLink to="/register" className={styles.link}>
+          <NavLink style={{ color: linkColor }} to="/register" className={styles.link}>
             Зарегистрироваться
           </NavLink>
         </p>

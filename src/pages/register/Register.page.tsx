@@ -1,6 +1,6 @@
 import { FC, FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { Button, PasswordInput, TextInput, useMantineColorScheme } from '@mantine/core';
 import styles from './register.module.css';
 import { loginUser, registerUser } from '@/utils/api';
 import { useAppDispatch } from '@/utils/hooks/useApp';
@@ -10,6 +10,7 @@ import { UserData } from '@/utils/types';
 const RegisterPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { colorScheme } = useMantineColorScheme();
   const [loginValue, setLoginValue] = useState('');
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -75,6 +76,8 @@ const RegisterPage: FC = () => {
     }
   };
 
+  const linkColor = colorScheme === 'dark' ? '#66d9e8' : '#1864ab';
+
   return (
     <main className={styles.layout}>
       <form className={styles.form} onSubmit={fetchRegister}>
@@ -116,7 +119,7 @@ const RegisterPage: FC = () => {
       <div>
         <p className={styles.item}>
           Вы уже зарегистрированы?
-          <NavLink to="/login" className={styles.link}>
+          <NavLink style={{ color: linkColor }} to="/login" className={styles.link}>
             Войти
           </NavLink>
         </p>

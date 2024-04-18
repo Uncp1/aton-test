@@ -36,7 +36,6 @@
 }
 
 .link {
-  color: rgb(24, 100, 171);
   text-decoration: none;
 }
 
@@ -44,10 +43,22 @@
   .input {
     width: 360px;
   }
+
+  .layout {
+    margin-top: 120px;
+  }
 }
 
 @media (max-width: 400px) {
   .input {
     width: 240px;
+  }
+
+  .layout {
+    margin-top: 60px;
+  }
+
+  .item {
+    max-width: 240px;
   }
 }

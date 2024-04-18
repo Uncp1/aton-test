@@ -26,7 +26,8 @@ const ClientItem: FC<ClientItemData> = ({
     setIsLoading(false);
   };
 
-  const clientBackgroundColor = colorScheme === 'dark' ? '#1c1c21' : theme.colors.gray[0];
+  const clientBackgroundColor =
+    colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.gray[0];
 
   const [value, setValue] = useState<string>(status);
   const handleValueChange = (newValue: string | null) => {

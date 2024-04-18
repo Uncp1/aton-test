@@ -76,7 +76,7 @@ export const HomePage: FC = () => {
       <h2 className={styles.title}>Здравствуйте, {username}</h2>
 
       <Button onClick={generateClient} variant="light" radius="xl">
-        Сгенерировать клиентов
+        Сгенерировать клиента
       </Button>
       <section className={styles.clientsList}>{renderClientsList()}</section>
     </main>
